@@ -1,0 +1,72 @@
+.ids-nav {
+    margin: 0px;
+    color: white
+}
+
+.ids-row {
+    margin-left: 40px;
+    display: flex;    
+}
+
+
+.nav-ico {
+    padding-right: 5px;
+    font-size: 20px; 
+}
+
+.ids-group{
+    width: auto;
+    background:linen;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 4px;
+}
+
+.ids-heading{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.ids-req{
+    /* background:magenta ; */
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.ids-btn{
+    border-radius: 40px;
+    background-color: lightcoral;
+    margin: auto;
+    border: 0;
+}
+
+/* 
+.ids-req:first-child{
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.ids-req:last-child{
+    margin-left: -1px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 0px;
+} */
+
+
+/* TODO ADD NESTED MENU
+.dropdown-menu li {
+    position: relative;
+  }
+  .dropdown-menu .dropdown-submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -7px;
+  }
+  .dropdown-menu .dropdown-submenu-left {
+    right: 100%;
+    left: auto;
+  }
+  .dropdown-menu > li:hover > .dropdown-submenu {
+    display: block;
+  } */

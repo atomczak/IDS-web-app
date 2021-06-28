@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block nav_create %}active{% endblock %}
+
+{% block body %}
+
+</br>
+<br>
+<div class="container" style="display: flex; width:auto">
+    <h2 style="padding-right: 70px;">My Information Delivery Specification</h2>
+
+    <a href="#" class="dropdown-toggle btn btn-outline-success" data-bs-toggle="dropdown"><i class="bi bi-file-earmark-arrow-down nav-ico
+    "></i>Download IDS</a>
+    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
+        <li><a class="dropdown-item" href="#" aria-current="page">Download IDS.xml</a></li>
+        <li><a class="dropdown-item disabled" href="#" aria-current="page">Download .DOC</a></li>
+        <li><a class="dropdown-item disabled" href="#" aria-current="page">Download .PDF</a></li>
+    </ul>
+</div>
+
+</br>
+
+{% if ids|length < 1 %} <h4>There are no specifications. Create one below!</h4>
+
+    {% else %}
+    {% for spec in ids %}
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text ids-heading">{{ spec.id }}.</span>
+        </div>
+        <input type="text" class="form-control ids-heading" value="{{ spec.name }}">
+        <div class="input-group-prepend">
+            <span class="input-group-text ids-heading"><a href="delete/{{spec.id}}"><i class="bi bi-trash nav-ico
+                "></i></a></span>
+        </div>
+    </div>
+
+    <form>
+        <div class="form-row ids-row">
+            <div class="ids-group">
+                {% for appl in spec.applicability %}
+
+                <!-- TODO add 'and' except for first element. -->
+
+                <div class="input-group mb-2 mr-sm-2 ids-req" style="width:auto;">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">{{ appl.pre }}</div>
+                    </div>
+
+                    {% if appl.type == 'text' %}
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" value="{{ appl.val }}"
+                        aria-describedby="help">
+
+                    {% elif appl.type == 'select' %}
+
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>{{ appl.val }}</option>
+                        <option value="1">Beams</option>
+                        <option value="2">Columns</option>
+                        <option value="3">Slabs</option>
+                    </select>
+
+                    {% else %}
+                    NOT IMPLEMENTED (PRE:{{ appl.pre }}, VAL:{{ appl.val }})
+
+                    {% endif %}
+
+                    <div class="input-group-prepend" style="width:30px">
+                        <span class="input-group-text">
+                            <a href="delete_requirement/{{ spec.id }}.{{ appl.id }}.applicability"
+                                style="color: black; text-decoration: none;">-</a>
+                        </span>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+                <div class="input-group-prepend dropdown" style="width:50px">
+                    <a href="#" class="dropdown-toggle input-group-text" data-bs-toggle="dropdown"
+                        style="color: black; text-decoration: none;">+</a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.applicability.material"
+                                aria-current="page">of material...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.applicability.classification"
+                                aria-current="page">of classification...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.applicability.property"
+                                aria-current="page">of property...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.applicability.predefined"
+                                aria-current="page">of predefined type...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.applicability.entity"
+                                aria-current="page">of entity...</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="ids-group" style="background: white; padding-left: 4px; padding-right: 4px;">
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">should have</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ids-group">
+
+                {% for req in spec.requirements %}
+
+                <!-- TODO add 'and' except for first element. -->
+
+                <div class="input-group mb-2 mr-sm-2 ids-req" style="width:auto;">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">{{ req.pre }}</div>
+                    </div>
+
+                    {% if req.type == 'text' %}
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" value="{{ req.val }}"
+                        aria-describedby="help">
+
+                    {% elif req.type == 'select' %}
+
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>{{ req.val }}</option>
+                        <option value="1">Beams</option>
+                        <option value="2">Columns</option>
+                        <option value="3">Slabs</option>
+                    </select>
+
+                    {% else %}
+                    NOT IMPLEMENTED (PRE:{{ req.pre }}, VAL:{{ req.val }})
+
+                    {% endif %}
+
+                    <div class="input-group-prepend" style="width:30px">
+                        <span class="input-group-text">
+                            <a href="delete_requirement/{{ spec.id }}.{{ req.id }}.requirements"
+                                style="color: black; text-decoration: none;">-</a>
+                        </span>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+                <div class="input-group-prepend dropdown" style="width:50px">
+                    <a href="#" class="dropdown-toggle input-group-text" data-bs-toggle="dropdown"
+                        style="color: black; text-decoration: none;">+</a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.requirements.material"
+                                aria-current="page">a material...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.requirements.classification"
+                                aria-current="page">a classification...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.requirements.property"
+                                aria-current="page">a property...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.requirements.predefined"
+                                aria-current="page">a predefined type...</a></li>
+                        <li><a class="dropdown-item" href="add_requirement/{{ spec.id }}.requirements.entity"
+                                aria-current="page">an entity...</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+    <br>
+    {% endfor %}
+
+    {% endif %}
+
+
+
+    <div class="input-group-prepend" style="width:40px">
+        <span class="input-group-text ids-heading">
+            <a href="add_specification" style="color: black; text-decoration: none;">+</a>
+        </span>
+    </div>
+
+
+    <!-- <form action="/create" method="POST">
+        <input type="int" name="id" id="id">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Add Task">
+    </form> -->
+
+    {% endblock %}

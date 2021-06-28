@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block nav_validate %}active{% endblock %}
+
+{% block body %}
+
+<form>
+    <div class="form-group">
+        <label for="exampleFormControlFile1"><u>Don't</u> upload your IFC file: </label>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" style="padding-left:30px">
+    </div>
+</form>
+
+<br>
+<div class="container" style="display: flex; width:auto">
+    <h2 style="padding-right: 70px;">Validation report:</h2>
+
+    <a href="#" class="dropdown-toggle btn btn btn-outline-success" data-bs-toggle="dropdown"><i class="bi bi-file-earmark-arrow-down nav-ico
+        "></i>Download report</a>
+    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
+        <li><a class="dropdown-item" href="#" aria-current="page">Download BCF</a></li>
+        <li><a class="dropdown-item disabled" href="#" aria-current="page">Download DOC</a></li>
+        <li><a class="dropdown-item disabled" href="#" aria-current="page">Download PDF</a></li>
+    </ul>
+</div>
+<br>
+No results to show.
+
+
+
+{% endblock %}

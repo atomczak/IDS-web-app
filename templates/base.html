@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="description" content="No description.">
+	<meta name="author" content="Artur +Bootstrap contributors">
+	<meta name="generator" content="Artur +Bootstrap contributors">
+
+	<link rel="shortcut icon" type="image/jpg" href="../static/icons/favicon.ico" />
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<!-- Custom styles for this template -->
+	<link href="../static/css/custom_styles.css" rel="stylesheet">
+	<!-- <link href="../static/form-validation.css" rel="stylesheet"> -->
+	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+	<title>My IDS</title>
+
+</head>
+
+<body class="bg-light">
+
+	<header class="p-3 bg-dark text-white">
+		<div class="container-fluid d-grid gap-3 align-items-center">
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a href="/" class="nav-link ids-nav {% block nav_home %}{% endblock %}" aria-current="page">
+						<i class="bi bi-house nav-ico"></i>Home</a>
+				</li>
+				<li class="nav-item">
+					<div class="dropdown nav-link ids-nav {% block nav_create %}{% endblock %}">
+						<a href="/create"
+							class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 text-decoration-none dropdown-toggle ids-nav"
+							style="margin: 0px" id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bi bi-file-earmark-plus nav-ico
+							"></i>Create IDS
+						</a>
+						<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
+							<li><a class="dropdown-item" href="/create" aria-current="page"><i class="bi bi-file-earmark-plus
+								"></i>Start new IDS</a></li>
+							<li>
+								<a class="dropdown-item disabled" href="/create" aria-current="page"><i class="bi bi-file-earmark-medical
+									"></i>Load predefined IDS &raquo;</a>
+							</li>
+
+
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item disabled" href="/create" aria-current="page"><i class="bi bi-file-earmark-arrow-up
+								"></i>Upload IDS file</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="nav-item"><a href="/validate"
+						class="nav-link ids-nav {% block nav_validate %}{% endblock %}"><i
+							class="bi bi-file-earmark-check nav-ico"></i>Validate IFC model</a></li>
+
+
+				<h3 style="color: red; font-size: 32px; padding-left:30px">WORK-IN-PROGRESS</h3>
+			</ul>
+
+
+		</div>
+	</header>
+
+	</br>
+	</br>
+
+	<div class="container px-4 gx-2 border bg-white">
+		<main>
+
+			</br>
+
+			{% block body %}
+
+			{% endblock %}
+
+		</main>
+		<footer class="my-5 pt-5 text-muted text-center text-small">
+			<p class="mb-1">2021 IDS demo</p>
+		</footer>
+
+	</div>
+	<!-- JavaScript: Bootstrap Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="../static/js/create.js"></script>
+
+</body>
+
+
+
+</html>
