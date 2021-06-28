@@ -5,6 +5,7 @@ from flask import request
 from flask import redirect
 from flask import session
 from flask import url_for
+import copy
 # from flask.ext.session import Session
 from werkzeug.exceptions import RequestedRangeNotSatisfiable
 
@@ -41,6 +42,23 @@ def delete(id):
         return redirect('/create')
     except:
         return 'There was an error while deleting that specification.'
+
+@app.route('/duplicate/<int:id>')
+def duplicate(id):
+    try:
+        for i in range(len(session['ids_db'])):
+            if session['ids_db'][i]['id'] == id:
+                new = copy.deepcopy(session['ids_db'][i])
+                new['id'] = id+1
+                session['ids_db'].insert(id, new)
+                session.modified = True
+        #renumber:
+        for j in range(len(session['ids_db'])):
+            session['ids_db'][j]['id'] = j+1
+            session.modified = True
+        return redirect('/create')
+    except:
+        return 'There was an error while duplicating that specification.'
 
 @app.route('/add_specification')
 def add_specification():
@@ -118,19 +136,6 @@ def delete_requirement(id):
 @app.route('/validate')
 def validate_page():
     return render_template('validate.html')
-
-
-# @app.route('/session/')
-# def updating_session():
-    
-#     cart_item = {'pineapples': 10, 'apples': 20}
-#     if 'cart_item' in session:
-#         session['cart_item']['pineapples'] += 1
-#         session.modified = True
-#     else:
-#         session['cart_item'] = cart_item
-
-#     return str(session.items())
 
 
 
