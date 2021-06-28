@@ -135,9 +135,11 @@ def delete_requirement(id):
 
 @app.route('/validate')
 def validate_page():
-    return render_template('validate.html')
-
-
+    if 'ids_db' not in session:
+        session['ids_db'] = DEFAULT_IDS
+        session.modified = True
+    return render_template('validate.html', ids=session['ids_db'])
+    
 
 DEFAULT_IDS = [
     {'id':1, 'name':'Fire requirement specification', 
