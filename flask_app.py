@@ -3,9 +3,13 @@ from markupsafe import escape
 from flask import render_template
 from flask import request
 from flask import redirect
+from flask import session
+from flask import url_for
+# from flask.ext.session import Session
 from werkzeug.exceptions import RequestedRangeNotSatisfiable
 
 app = Flask(__name__)
+app.secret_key = '16g2evbdc8723nd9812s9x'
 
 @app.route('/')
 def home_page():
@@ -14,33 +18,36 @@ def home_page():
 @app.route('/create', methods=['POST','GET'])
 def create_page():
     if request.method == 'POST':
-        global ids_db
-        ids_db.append({'id': request.form['id'], 'content': request.form['content']})
+        # TODO implement form actions
+        # ids_db.append({'id': request.form['id'], 'content': request.form['content']})
+        # session.modified = True
         return redirect('/create')
     else:
-        return render_template('create.html', ids=ids_db)
+        if 'ids_db' not in session:
+            session['ids_db'] = DEFAULT_IDS
+        session.modified = True
+        return render_template('create.html', ids=session['ids_db'])
 
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    global ids_db
     try:
-        for i in range(len(ids_db)):
-            ids_db = list(filter(lambda i: i['id'] != id, ids_db))
+        for i in range(len(session['ids_db'])):
+            session['ids_db'] = list(filter(lambda i: i['id'] != id, session['ids_db']))
         #renumber:
-        for i in range(len(ids_db)):
-            ids_db[i]['id'] = i+1
+        for i in range(len(session['ids_db'])):
+            session['ids_db'][i]['id'] = i+1
+        session.modified = True
         return redirect('/create')
     except:
         return 'There was an error while deleting that specification.'
 
 @app.route('/add_specification')
 def add_specification():
-    global ids_db
-    for i in range(len(ids_db)):
-        ids_db[i]['id'] = i+1
-    ids_db.append(
-        {'id':len(ids_db)+1, 'name':'New specification', 
+    for i in range(len(session['ids_db'])):
+        session['ids_db'][i]['id'] = i+1
+    session['ids_db'].append(
+        {'id':len(session['ids_db'])+1, 'name':'New specification', 
         'applicability':[
             {'id': 1.1, 'type':'select', 'pre':'All', 'val':'IfcElements...'}
             ],
@@ -50,7 +57,7 @@ def add_specification():
             # {'id': 1.3, 'type':'text', 'pre':'ZAbc3', 'val':'ZDef3'}
             ]
         })
-    # return str(ids_db)
+    session.modified = True
     return redirect('/create')
  
 
@@ -87,8 +94,8 @@ def add_requirement(id):
         else:
             pre = 'a '+pre
 
-    global ids_db
-    ids_db[id][ar].append({'id': len(ids_db[id][ar])+1, 'type':type, 'pre':pre, 'val':val})
+    session['ids_db'][id][ar].append({'id': len(session['ids_db'][id][ar])+1, 'type':type, 'pre':pre, 'val':val})
+    session.modified = True
     return redirect('/create')
 
 @app.route('/delete_requirement/<id>')
@@ -96,17 +103,16 @@ def delete_requirement(id):
     id, rid, ar = id.split('.')
     id = int(id)-1
     rid = int(rid)
-    global ids_db
     try:
-        for i in range(len(ids_db[id][ar])):
-            ids_db[id][ar] = list(filter(lambda i: i['id'] != rid, ids_db[id][ar]))
+        for i in range(len(session['ids_db'][id][ar])):
+            session['ids_db'][id][ar] = list(filter(lambda i: i['id'] != rid, session['ids_db'][id][ar]))
         #renumber:
-        for i in range(len(ids_db[id][ar])):
-            ids_db[id][ar][i]['id'] = i+1
+        for i in range(len(session['ids_db'][id][ar])):
+            session['ids_db'][id][ar][i]['id'] = i+1
+        session.modified = True
         return redirect('/create')
     except:
         return 'There was an error while deleting that requirement'
-
 
 
 @app.route('/validate')
@@ -114,8 +120,21 @@ def validate_page():
     return render_template('validate.html')
 
 
+# @app.route('/session/')
+# def updating_session():
+    
+#     cart_item = {'pineapples': 10, 'apples': 20}
+#     if 'cart_item' in session:
+#         session['cart_item']['pineapples'] += 1
+#         session.modified = True
+#     else:
+#         session['cart_item'] = cart_item
 
-ids_db = [
+#     return str(session.items())
+
+
+
+DEFAULT_IDS = [
     {'id':1, 'name':'Fire requirement specification', 
     'applicability':[
         {'id': 1, 'type':'select', 'pre':'All', 'val':'Walls'}, 
@@ -139,4 +158,3 @@ ids_db = [
 
 if __name__ == '__main__':
     app.run()
-
