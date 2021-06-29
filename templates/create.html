@@ -43,9 +43,12 @@
     <form>
         <div class="form-row ids-row">
             <div class="ids-group">
+
+                <!-- TODO add for loop to handle both applicability and requirements (currently repeated code.). -->
+
                 {% for appl in spec.applicability %}
 
-                <!-- TODO add 'and' except for first element. -->
+                <!-- TODO add 'and'/'of' except for first element. -->
 
                 <div class="input-group mb-2 mr-sm-2 ids-req" style="width:auto;">
                     <div class="input-group-prepend">
@@ -70,10 +73,12 @@
 
                     {% endif %}
 
-                    <div class="input-group-prepend" style="width:30px">
-                        <span class="input-group-text">
+                    <!-- delete requirement button -->
+                    <div class="input-group-prepend" style="width:40px">
+                        <span class="input-group-text" style="width:40px">
                             <a href="delete_requirement/{{ spec.id }}.{{ appl.id }}.applicability"
-                                style="color: black; text-decoration: none;">-</a>
+                                style="color: black; text-decoration: none;"><i class="bi bi-trash
+                                                    "></i></a>
                         </span>
                     </div>
 
@@ -100,7 +105,7 @@
 
             </div>
 
-            <div class="ids-group" style="background: white; padding-left: 4px; padding-right: 4px;">
+            <div class="ids-group" style="background: white; padding-left: 4px; padding-right: 4px; flex:none">
                 <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">should have</div>
@@ -137,10 +142,12 @@
 
                     {% endif %}
 
-                    <div class="input-group-prepend" style="width:30px">
-                        <span class="input-group-text">
+                    <!-- delete requirement button -->
+                    <div class="input-group-prepend" style="width:40px">
+                        <span class="input-group-text" style="width:40px">
                             <a href="delete_requirement/{{ spec.id }}.{{ req.id }}.requirements"
-                                style="color: black; text-decoration: none;">-</a>
+                                style="color: black; text-decoration: none;"><i class="bi bi-trash
+                                "></i></a>
                         </span>
                     </div>
 

@@ -6,7 +6,6 @@ from flask import redirect
 from flask import session
 from flask import url_for
 import copy
-# from flask.ext.session import Session
 from werkzeug.exceptions import RequestedRangeNotSatisfiable
 
 app = Flask(__name__)
@@ -28,7 +27,6 @@ def create_page():
             session['ids_db'] = DEFAULT_IDS
         session.modified = True
         return render_template('create.html', ids=session['ids_db'])
-
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -67,7 +65,7 @@ def add_specification():
     session['ids_db'].append(
         {'id':len(session['ids_db'])+1, 'name':'New specification', 
         'applicability':[
-            {'id': 1.1, 'type':'select', 'pre':'All', 'val':'IfcElements...'}
+            {'id': 1, 'type':'select', 'pre':'All', 'val':'IfcElements...'}
             ],
         'requirements':[
             # {'id': 1.1, 'type':'text', 'pre':'ZAbc', 'val':'ZDef'}, 
@@ -78,7 +76,6 @@ def add_specification():
     session.modified = True
     return redirect('/create')
  
-
 @app.route('/add_requirement/<id>')
 def add_requirement(id):
     id, ar, fac = id.split('.')
@@ -132,7 +129,6 @@ def delete_requirement(id):
     except:
         return 'There was an error while deleting that requirement'
 
-
 @app.route('/validate')
 def validate_page():
     if 'ids_db' not in session:
@@ -140,7 +136,6 @@ def validate_page():
         session.modified = True
     return render_template('validate.html', ids=session['ids_db'])
     
-
 DEFAULT_IDS = [
     {'id':1, 'name':'Fire requirement specification', 
     'applicability':[
