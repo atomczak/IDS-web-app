@@ -6,43 +6,55 @@
 
 </br>
 <br>
-<div class="container" style="display: flex; width:auto">
-    <h2 style="padding-right: 70px;">My Information Delivery Specification</h2>
 
-    <a href="#" class="dropdown-toggle btn btn-outline-success" data-bs-toggle="dropdown"><i class="bi bi-file-earmark-arrow-down nav-ico
-    "></i>Download IDS</a>
-    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
-        <li><a class="dropdown-item" href="#" aria-current="page">Download IDS.xml</a></li>
-        <li><a class="dropdown-item disabled" href="#" aria-current="page">Download .DOC</a></li>
-        <li><a class="dropdown-item disabled" href="#" aria-current="page">Download .PDF</a></li>
-    </ul>
-</div>
 
+<form>
+
+    <div class="row mb-3" style="display: flex; width:auto">
+        <!-- TODO this should be a form text field -->
+        <h2 class="col-10">My Information Delivery Specification</h2>
+
+        <a href="#" class="dropdown-toggle btn btn-outline-success col-2" style="height:fit-content; width: auto;
+        margin: 10px;" data-bs-toggle="dropdown"><i class="bi bi-file-earmark-arrow-down nav-ico
+            "></i>Download IDS</a>
+        <ul class="dropdown-menu text-small shadow" style="width:fit-content" aria-labelledby="dropdownNavLink">
+            <li><a class="dropdown-item" href="#" aria-current="page">Download IDS.xml</a></li>
+            <li><a class="dropdown-item disabled" href="#" aria-current="page">Download .DOC</a></li>
+            <li><a class="dropdown-item disabled" href="#" aria-current="page">Download .PDF</a></li>
+        </ul>
+
+    </div>
+
+</form>
 </br>
+
+<!-- TODO form should be one for all, currently small forms for each specifications. -->
 
 {% if ids|length < 1 %} <h4>There are no specifications. Create one below!</h4>
 
     {% else %}
     {% for spec in ids %}
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text ids-heading">{{ spec.id }}.</span>
-        </div>
-        <input type="text" class="form-control ids-heading" value="{{ spec.name }}">
-        <div class="input-group-prepend">
-            <span class="input-group-text ids-heading"><a href="duplicate/{{spec.id}}"><i class="bi bi-files
-                " style="color:black"></i></a></span>
-        </div>
-        <div class="input-group-prepend">
-            <span class="input-group-text ids-heading"><a href="delete/{{spec.id}}"><i class="bi bi-trash nav-ico
-                " style="color:black"></i></a></span>
-        </div>
-    </div>
-
     <form>
-        <div class="form-row ids-row">
-            <div class="ids-group">
+
+        <div class="form-row input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text ids-heading">{{ spec.id }}.</span>
+            </div>
+            <input type="text" class="form-control ids-heading" value="{{ spec.name }}">
+            <div class="input-group-prepend">
+                <span class="input-group-text ids-heading"><a href="duplicate/{{spec.id}}"><i class="bi bi-files
+                " style="color:black"></i></a></span>
+            </div>
+            <div class="input-group-prepend">
+                <span class="input-group-text ids-heading"><a href="delete/{{spec.id}}"><i class="bi bi-trash nav-ico
+                " style="color:black"></i></a></span>
+            </div>
+        </div>
+
+        <div class="form-row ids-row row mb-3">
+
+            <div class="ids-group col-5">
 
                 <!-- TODO add for loop to handle both applicability and requirements (currently repeated code.). -->
 
@@ -50,7 +62,7 @@
 
                 <!-- TODO add 'and'/'of' except for first element. -->
 
-                <div class="input-group mb-2 mr-sm-2 ids-req" style="width:auto;">
+                <div class="input-group mb-2 mr-sm-2 ids-req">
                     <div class="input-group-prepend">
                         <div class="input-group-text">{{ appl.pre }}</div>
                     </div>
@@ -86,7 +98,7 @@
 
                 {% endfor %}
 
-                <div class="input-group-prepend dropdown" style="width:50px">
+                <div class="input-group-prepend dropdown ids-req" style="width:50px">
                     <a href="#" class="dropdown-toggle input-group-text" data-bs-toggle="dropdown"
                         style="color: black; text-decoration: none;">+</a>
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNavLink">
@@ -105,7 +117,8 @@
 
             </div>
 
-            <div class="ids-group" style="background: white; padding-left: 4px; padding-right: 4px; flex:none">
+            <div class="ids-group col-1"
+                style="width:fit-content; background: white; padding-left: 4px; padding-right: 4px; padding-top: 10px; flex:none">
                 <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">should have</div>
@@ -113,13 +126,13 @@
                 </div>
             </div>
 
-            <div class="ids-group">
+            <div class="ids-group col-5">
 
                 {% for req in spec.requirements %}
 
                 <!-- TODO add 'and' except for first element. -->
 
-                <div class="input-group mb-2 mr-sm-2 ids-req" style="width:auto;">
+                <div class="input-group mb-2 mr-sm-2 ids-req">
                     <div class="input-group-prepend">
                         <div class="input-group-text">{{ req.pre }}</div>
                     </div>
