@@ -1,0 +1,15 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('ViewDefinition [CoordinationView]'),'2;1');
+FILE_NAME('/dev/null','2021-06-21T14:49:36+02:00',(),(),'IfcOpenShell 0.6.0b0','IfcOpenShell 0.6.0b0','Nobody');
+FILE_SCHEMA(('IFC4'));
+ENDSEC;
+DATA;
+#1=IFCPROJECT('12sX$NhqL2ZPqUDT0qaE8_',$,$,$,$,$,$,$,$);
+#2=IFCCLASSIFICATION('OmniClass','(OCCS)','2017-03-28','OmniClass','The OmniClass Construction Classification System (known as OmniClass\X2\2122\X0\ or OCCS) is a classification system for the construction industry. OmniClass is useful for many applications, from organizing library materials, product literature, and project information, to providing a classification structure for electronic databases.','http://www.omniclass.org/',('-',' '));
+#3=IFCRELASSOCIATESCLASSIFICATION('3NlM5xZ3TE2w0Dk1ug7ryt',$,$,$,(#1),#2);
+#4=IFCWALL('23Sz6ANJ1EZufr5LSuhzok',$,$,$,$,$,$,$,$);
+#5=IFCCLASSIFICATIONREFERENCE($,'13-25 13 00','Transitional Circulation Spaces',$,$,$);
+#6=IFCRELASSOCIATESCLASSIFICATION('1ysQ_W0v11MRCmhelfUwCk',$,$,$,(#7,#4),#5);
+ENDSEC;
+END-ISO-10303-21;
