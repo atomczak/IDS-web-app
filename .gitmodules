@@ -1,0 +1,3 @@
+[submodule "Sample-BIM-Files"]
+	path = Sample-BIM-Files
+	url = https://github.com/atomczak/Sample-BIM-Files
