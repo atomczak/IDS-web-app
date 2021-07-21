@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>IDS Creator</title>
-	<meta name="description" content="Free BIM information delivery specification creator.">
+	<meta name="description" content="Free BIM information delivery specification (IDS) creator.">
 	<meta name="author" content="Artur Tomczak">
 	<meta name="generator" content="Artur Tomczak">
 
@@ -22,7 +22,6 @@
 	<!-- <link href="../static/form-validation.css" rel="stylesheet"> -->
 	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
 
 </head>
 
@@ -62,10 +61,12 @@
 				</li>
 
 				<li class="nav-item"><a href="/validate"
-						class="nav-link ids-nav {% block nav_validate %}{% endblock %}"><i
-							class="bi bi-file-earmark-check nav-ico"></i>Validate IFC model</a></li>
+						class="nav-link ids-nav {% block nav_validate %}{% endblock %}">
+						<i class="bi bi-file-earmark-check nav-ico"></i>Validate IFC model</a></li>
 
-
+				<li class="nav-item"><a href="/documentation" class="nav-link ids-nav {% block nav_documentation %}{% endblock %}">
+						<i class="bi bi-file-earmark-code nav-ico"></i>Documentation</a></li>
+									
 				<h3 style="color: red; font-size: 32px; padding-left:30px">WORK-IN-PROGRESS</h3>
 			</ul>
 
@@ -74,12 +75,9 @@
 	</header>
 
 	</br>
-	</br>
 
 	<div class="container px-4 gx-2 border bg-white">
 		<main>
-
-			</br>
 
 			{% block body %}
 
@@ -95,9 +93,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
-
 	<script type="text/javascript" src="../static/js/create.js"></script>
 
+	<!-- Ajax for form update without reload -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </body>
 
 

@@ -1,47 +1,69 @@
+/* old */
 .ids-nav {
     margin: 0px;
     color: white
 }
 
+/* old */
 .ids-row {
     margin-left: 40px;
     display: flex;  
 }
 
-
+/* old */
 .nav-ico {
     padding-right: 5px;
     font-size: 20px; 
 }
 
 .ids-group{
-    /* width: auto; */
-    background:whitesmoke;
-    padding: 8px;
-    border-radius: 8px;
-    margin: 4px;
+    padding: 0;
+    margin: 2px;
+    /* background:rgba(172, 179, 200, 0.5); */
+    /* border: 2px solid grey; */
+    /* border-radius: 4px; */
+}
+
+.ids-requirement{
+    padding-bottom: 3px;
+    /* background:rgba(158, 163, 185, 0.5); */
+    /* padding-top: 8px; */
+    /* padding-bottom: 8px; */
+    /* padding-left: 0px; */
+    /* padding-right: 0px; */
+    /* border-radius: 6px; */
+    /* margin: 2px; */
     /* flex:auto; */
 }
 
+/* old */
 .ids-heading{
     font-size: 20px;
     font-weight: bold;
 }
 
+/* old */
 .ids-req{
     /* background:magenta ; */
     padding: 2px;
     border-radius: 4px;
     width: fit-content;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
+/* old */
 .ids-btn{
     border-radius: 40px;
     background-color: lightcoral;
     margin: auto;
     border: 0;
 }
+
+/* .hover:hover{
+    background-color: green;
+} */
 
 /* 
 .ids-req:first-child{

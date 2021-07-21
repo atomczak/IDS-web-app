@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<h2 style="padding-right: 70px;">Validation input:</h2>
+</br>
 
 <h4 style="padding-right: 70px;">Created IDS:</h4>
 
@@ -13,11 +13,27 @@
     {% else %}
     {% for spec in ids %}
 
-    <b>({{ spec.id }}) {{ spec.name }}: </b>
-
-    {% for appl in spec.applicability %}
-
-    {{ appl.pre }} <i style='color:darkgreen'>{{ appl.val }}</i>
+    <b>{{ spec.id }}) {{ spec.name }}: </b>
+    <br>
+    All elements
+    {% for req in spec.applicability %}
+    {% if loop.index != 1 %}
+    and
+    {% endif %}
+    {% if req.type == 'entity' %}
+    of entity
+    {% for entity in req.value %}
+    {% if loop.index != 1 %}
+    or
+    {% endif %}
+    <p style='color:green; display:inline'>{{ entity }}{% if entity == '' %}_____{% endif %}
+    </p>
+    {% endfor %}
+    {% else %}
+    of {{ req.type }} <p style='color:green; display:inline'>{{ req.value }}{{ req.system }}{{ req.pset }}{{ req.property
+        }}{% if req.value == '' %}_____{% endif %}
+    </p>
+    {% endif %}
 
     {% endfor %}
 
@@ -25,7 +41,12 @@
 
     {% for req in spec.requirements %}
 
-    {{ req.pre }} <i style='color:chocolate'>{{ req.val }}</i>
+    {% if loop.index != 1 %}
+    and
+    {% endif %}
+    
+    a {{ req.type }} <p style='color:chocolate; display:inline'>{{ req.value }}{{ req.system }}{{ req.pset }}{{ req.property
+        }}{% if req.value == '' %}_____{% endif %}</p>
     {% endfor %}
     . <br>
     {% endfor %}
@@ -33,13 +54,7 @@
     {% endif %}
     <br>
 
-
-
     <h4 style="padding-right: 70px;">BIM model (IFC file):</h4>
-
-
-
-
 
     <form>
         <div class="form-group">
@@ -48,11 +63,28 @@
         </div>
     </form>
 
-
-
     <br>
+    
+    <button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Run the validation">
+        <a href="#">
+            <i class="bi bi-caret-right" style="color:black"></i>
+        </a>
+    </button>
+    
+    <br>
+    <br>
+    
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25"
+            aria-valuemin="0" aria-valuemax="100">25%</div>
+    </div>
+    <br>
+    <br>
+
     <div class="container" style="display: flex; width:auto">
-        <h2 style="padding-right: 70px;">Validation report:</h2>
+<h4 style="padding-right: 70px;">Validation report:</h4>
+<br>
+<br>
 
         <a href="#" class="dropdown-toggle btn btn btn-outline-success" data-bs-toggle="dropdown"><i class="bi bi-file-earmark-arrow-down nav-ico
         "></i>Download report</a>
@@ -62,9 +94,48 @@
             <li><a class="dropdown-item disabled" href="#" aria-current="page">Download PDF</a></li>
         </ul>
     </div>
+    <div class="alert alert-warning" role="alert">
+        The IDS applies to 100 IFC elements out of 1234 found in the model, from which 40 pass (40%) and 60 fail (60%).
+    </div>
+    <div class="accordion" id="accordion1" style='padding:5px'>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse1">
+                    60 elements failled the validation (60%).
+                </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse in" data-bs-parent="#accordion1">
+                <div class="accordion-body">
+                    <div class="alert alert-danger" role="alert">
+                        This is sample message about failing element.
+                    </div>
+                    <div class="alert alert-danger" role="alert">
+                        This is sample message about failing element.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion" id="accordion2" style='padding:5px'>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse2">
+                    40 elements passed the validation (40%).
+                </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse in" data-bs-parent="#accordion2">
+                <div class="accordion-body">
+                    <div class="alert alert-success" role="alert">
+                        This is sample message about passing element.
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        This is sample message about passing element.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
-    No results to show.
-
-
-
     {% endblock %}
