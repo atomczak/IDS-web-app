@@ -15,8 +15,8 @@ from werkzeug.exceptions import RequestedRangeNotSatisfiable
 from secret import SECRET_KEY #UPLOAD_FOLDER
 from datetime import date
 import os
-from ifcopenshell import ids
-from xmlschema.validators.exceptions import XMLSchemaChildrenValidationError
+from libs.ifcopenshell import ids
+from xmlschema.validators.exceptions import XMLSchemaChildrenValidationErrorlibs
 
 app = Flask(__name__)
 CORS(app)

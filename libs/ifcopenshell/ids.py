@@ -24,13 +24,13 @@ import csv
 import numpy as np
 from datetime import date
 
-import ifcopenshell.util.element
-import ifcopenshell.util.placement
+import libs.ifcopenshell.util.element
+import libs.ifcopenshell.util.placement
 
-from bcf.v2.bcfxml import BcfXml
-from bcf.v2 import data as bcf
+from libs.bcf.v2.bcfxml import BcfXml
+from libs.bcf.v2 import data as bcf
 
-from bcf import bcfxml
+from libs.bcf import bcfxml
 
 from xmlschema import XMLSchema
 from xmlschema import XMLSchemaConverter
