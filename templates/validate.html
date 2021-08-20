@@ -6,12 +6,18 @@
 
 </br>
 
+<h4 style="padding-right: 70px;">To be developed...</h4>
+
+</br>
+
+<!-- 
 <h4 style="padding-right: 70px;">Created IDS:</h4>
 
-{% if ids|length < 1 %} <h4>You need to create an IDS first. Go to <a href="/create">Create IDS</a> tab.</h4>
+{% if ids.specifications|length < 1 %} <h4>You need to create an IDS first. Go to <a href="/create">Create IDS</a> tab.
+    </h4>
 
     {% else %}
-    {% for spec in ids %}
+    {% for spec in ids.specifications %}
 
     <b>{{ spec.id }}) {{ spec.name }}: </b>
     <br>
@@ -137,5 +143,5 @@
             </div>
         </div>
     </div>
-    <br>
+    <br> -->
     {% endblock %}

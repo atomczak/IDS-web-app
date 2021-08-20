@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IDS (INFORMATION DELIVERY SPECIFICATION) CREATED USING IFCOPENSHELL -->
+<ids xmlns="http://standards.buildingsmart.org/IDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS/ids_04.xsd">
+    <specification name="Fire requirement specification" necessity="required">
+        <applicability>
+            <entity>
+                <name>
+                    <simpleValue>IfcWall</simpleValue>
+                </name>
+            </entity>
+        </applicability>
+        <requirements>
+            <material location="any">
+                <value>
+                    <simpleValue>TIMBERs</simpleValue>
+                </value>
+            </material>
+            <property location="any">
+                <propertyset>
+                    <simpleValue>Structural</simpleValue>
+                </propertyset>
+                <name>
+                    <simpleValue>Strength class</simpleValue>
+                </name>
+                <value>
+                    <simpleValue>C30</simpleValue>
+                </value>
+            </property>
+        </requirements>
+    </specification>
+    <specification name="New specification" necessity="required">
+        <applicability>
+            <entity>
+                <name>
+                    <simpleValue>IfcElement</simpleValue>
+                </name>
+            </entity>
+        </applicability>
+        <requirements>
+            <material location="any">
+                <value>
+                    <simpleValue>sad</simpleValue>
+                </value>
+            </material>
+        </requirements>
+    </specification>
+    <info>
+        <date>2021-08-20</date>
+    </info>
+</ids>

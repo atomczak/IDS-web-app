@@ -4,18 +4,146 @@
 
 {% block body %}
 
-<h1>Information Delivery Specification (IDS)</h1>
+</br>
 
-<p>
-    The idea in simple terms...
+<h3 style="text-align:center;">📋 Information Delivery Specification (IDS)</h3>
+</br>
+
+<p style="text-align:center;">
+
+    IDS is a standard for defining BIM information requirements in a way easy to present in both machine and
+    human-readable form. With IDS you can specify what data must be included in the BIM model and validate if it is
+    actually delivered. IDS implements the <i>Level of Information Needs</i> that can be used in your documentation
+    (<i>OIR, PIR, AIR, EIR, BEP, TIDP, MIDP, MPDT</i> etc.). Finally, it is the solution for predictable and reliable
+    data exchange workflows.
+    </br>
+    </br>
+
+    📋 contractual agreements + 🧮 validation mechanism = 💎 quality assurance
+    </br>
+    </br>
+    Read more about IDS at <a
+        href="https://technical.buildingsmart.org/projects/information-delivery-specification-ids/">technical.buildingSMART.org</a>
+    and technical <a href="https://github.com/buildingSMART/IDS">github page</a>.</br>
 </p>
 
 
-<a href="http://technical.buildingsmart.org/projects/information-delivery-specification-ids/">buildingSMART</a>
-<a href="https://github.com/buildingSMART/IDS
-">github/buildingSMART</a>
-<a href="https://github.com/IfcOpenShell/IfcOpenShell">github/IfcOpenShell
-</a>
+</br>
+</br>
+<h3 style="text-align:center;">🌍 IDS online</h3>
 
+<p style="text-align:center;">
+    To create your own IDS or look at examples simply navigate to <a href="/create/">Create IDS</a> tab of that
+    website.</br>
+    There you can define your specifications with applicability filters and requirements that your BIM model must
+    fulfill.
+</p>
+
+</br>
+</br>
+<h3 style="text-align:center;">👩‍💻 IDS.py (part of IfcOpenShell)</h3>
+
+<p style="text-align:center;">
+
+    IDS.py is an open-source implementation of the IDS concept inside the <a
+        href="http://ifcopenshell.org/">IfcOpenShell</a> toolkit.
+
+    </br>
+    </br>
+
+    Access the code at <a href="https://github.com/IfcOpenShell/IfcOpenShell">github/IfcOpenShell</a> and have a look at
+    the <a href="/documentation/">documentation and samples</a> to help you start. </br>
+    If you have some questions or comments join the disscussion at <a
+        href="https://community.osarch.org/discussion/647/">OSArch thread</a>.
+
+    </br>
+    The project has been developed during the <a
+        href="https://summerofcode.withgoogle.com/projects/#6089602298806272">Google Summer of Code (GSoC) 2021</a>.
+
+</p>
+</br>
+</br>
+
+<h3 style="text-align:center;">🧮 Validation workflow</h3>
+
+<img src="static/media/Info-Req-IDS-IDS-project-poster-scaled.jpg" alt="Workflow.jpg"
+    style="width:50%; height:auto; display: block; margin-left: auto; margin-right: auto;">
+</br>
+</br>
+
+<table style="width:100%; table-layout:fixed;">
+    <tr>
+        <td style="width:40%; text-align: right; vertical-align: top">
+            <h3 style="text-align:center;">👓 What user see</h3>
+            </br>
+            </br>
+
+            <p style="text-align:center;">All elements of entity <b>IfcWall</b></br>and of material <b>Concrete</b>
+                </br>
+                should have </br>
+                a property <b>Strength class</b> </br>
+                in propertyset <b>Structural</b> of value <b>C30/37</b>.
+            </p>
+            </td>
+            <td style="width:40%; text-align: left; vertical-align: top">
+                <h3 style="text-align:center;">What computer see 🔎</h3>
+<p>
+<xmp>
+    <ids ...>
+        <specification name="First IDS" necessity="required">
+            <applicability>
+                <entity>
+                    <name ...>IfcWall</name>
+                </entity>
+            </applicability>
+            <requirements>
+                <property ...>
+                    <propertyset ...>Test_PropertySet</propertyset>
+                    <name ...>Test_Parameter</name>
+                    <value ...>Test_Value</value>
+                </property>
+            </requirements>
+        </specification>
+    </ids>
+</xmp>
+</p>
+            </td>
+            </tr>
+            </table>
+            
+            
+            </br>
+            <br>
+            
+            <h3 style="text-align:center;">IDS 🆚 IDM</h3>
+            
+            <a href="https://technical.buildingsmart.org/standards/information-delivery-manual/">IDM</a> is a methodology standard
+            for processes and information flows in a building lifecycle. It is defined in the ISO 29481-1:2010 “Building information
+            modelling - Information delivery manual - Part 1: Methodology and format”
+            standard developed by buildingSMART.
+            </br>
+            IDS in contrast is a standard for defining data exchange requirements, so what information and in what form is required
+            of
+            IFC elements. It does not define data flows in the project.
+            </br>
+            IDS can be used as a solution for defining information requirements in IDM approach.
+            </br>
+            <br>
+            
+            <h3 style="text-align:center;">IDS 🆚 mvdXML</h3>
+            
+            <a href="https://technical.buildingsmart.org/standards/ifc/mvd/mvdxml/">mvdXML</a> is a format for encoding MVDs - <a
+                href="https://technical.buildingsmart.org/standards/ifc/mvd">Model View Definitions</a> and its sub schemas. It is
+            mainly designed to support software vendors in limiting the scope of IFC specification using defined MVDs and to achieve
+            software certification.
+            mvdXML is sometimes used for the same purpose as IDS but since it is not designed for it is quite difficult to create
+            and understand. mvdXML is also schema dependent, while IDS allows for more flexibility.
+            <br>
+            </br>
+
+            <!-- <h3 style="text-align:center;">📚 Literature on IDS</h3>
+                                                                        <br>[1] Test
+                                                                        <br>[2] Test
+                                                                        <br>[3] Test -->
 
 {% endblock %}

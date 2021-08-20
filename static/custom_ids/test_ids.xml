@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IDS (INFORMATION DELIVERY SPECIFICATION) CREATED USING IFCOPENSHELL -->
+<ids xmlns="http://standards.buildingsmart.org/IDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS/ids_04.xsd">
+    <specification name="Test_Specification" necessity="required">
+        <applicability>
+            <entity>
+                <name>
+                    <simpleValue>Test_Name</simpleValue>
+                </name>
+            </entity>
+            <material location="any">
+                <value>
+                    <simpleValue>Test_Value</simpleValue>
+                </value>
+            </material>
+        </applicability>
+        <requirements>
+            <classification location="any">
+                <value>
+                    <simpleValue>Test_Value</simpleValue>
+                </value>
+                <system>
+                    <simpleValue>Test_System</simpleValue>
+                </system>
+            </classification>
+            <property location="any">
+                <propertyset>
+                    <simpleValue>Test_PropertySet</simpleValue>
+                </propertyset>
+                <name>
+                    <simpleValue>Test_Parameter</simpleValue>
+                </name>
+                <value>
+                    <simpleValue>Test_value</simpleValue>
+                </value>
+            </property>
+        </requirements>
+    </specification>
+    <info>
+        <date>2021-08-20</date>
+    </info>
+</ids>

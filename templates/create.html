@@ -8,43 +8,109 @@
 
 <form>
 
+    <!-- IFC name -->
+
     <div class="row mb-3" style="display: flex; width:-webkit-fill-available;">
         <!-- TODO this should be a form text field -->
         <h2 class='col-10'> <input style='width: inherit; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: -webkit-baseline-middle; border: 0px;
-                                border-bottom: 2px solid lightgrey' value='My Information Delivery Specification'></input></h2>
+                                border-bottom: 2px solid lightgrey' id="name" onfocusout="updateField('name')" placeholder="My Information Delivery Specification"
+                value='{{ids.name}}'></input></h2>
 
         <a href="#" class="dropdown-toggle btn btn-outline-success col-2" style="height:fit-content; width: auto;
         margin: 10px;" data-bs-toggle="dropdown"><i class="bi bi-file-earmark-arrow-down nav-ico
             "></i>Download IDS</a>
         <ul class="dropdown-menu text-small shadow" style="width:fit-content">
             <!-- aria-labelledby="dropdownNavLink" -->
-            <li><a class="dropdown-item" href="#">Download IDS.xml</a></li> <!-- aria-current="page" -->
-            <li><a class="dropdown-item disabled" href="#">Download .DOC</a></li> <!-- aria-current="page" -->
-            <li><a class="dropdown-item disabled" href="#">Download .PDF</a></li> <!-- aria-current="page" -->
+            <!-- <li class="dropdown-item" onclick="downalodIds()">Download IDS.xml</li> -->
+            <li><a class="dropdown-item" href="/api/download-ids">Download IDS.xml</a></li> 
+            <li><a class="dropdown-item disabled" href="#">Download IDS.docx</a></li> <!-- aria-current="page" -->
+            <li><a class="dropdown-item disabled" href="#">Download IDS.pdf</a></li> <!-- aria-current="page" -->
         </ul>
 
     </div>
 
+    
+    <!-- Alerts: -->
+    
+    <!-- {% block alertMessage %}  {% endblock %}
+    
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>IDS.xml is ready.</strong> Download should start anytime.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>IDS.xml is invalid!</strong> See the error below: <br>
+        <i>I'm the error...</i>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> -->
+
+    <!-- IFC info -->
+
+    <div class="row mb-3" style="display: flex; width:-webkit-fill-available;">
+        <div class="col">
+            <label for="exampleFormControlSelect1">IFC schema</label>
+            <!-- <select class="form-control" id="ifcversion" onfocusout="updateField('ifcversion')" value='{{ids.ifcversion}}'>
+                                                                                    <option key='Any' value='Any'>Any</option>
+                                                                                    <option key='2.3.0.1' value='2.3.0.1'>2.3.0.1</option>
+                                                                                    <option key='4.0.2.1' value='4.0.2.1'>4.0.2.1</option>
+                                                                                    <option key='4.3.0.0' value='4.3.0.0'>4.3.0.0</option>
+                                                                                </select> -->
+    
+            <input class="form-control" id="ifcversion" list="IfcSchemas" onfocusout="updateField('ifcversion')"
+                placeholder="Any" value='{{ids.ifcversion}}'>
+    
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1">Description</label>
+            <input class="form-control" id="description" onfocusout="updateField('description')" placeholder="This IDS..."
+                value='{{ids.description}}'>
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1">Author</label>
+            <input type="email" class="form-control" id="author" onfocusout="updateField('author')"
+                placeholder="name@example.com" value='{{ids.author}}'>
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1">Copyright</label>
+            <input class="form-control" id="copyright" onfocusout="updateField('copyright')" placeholder="name@example.com"
+                value='{{ids.copyright}}'>
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1">Creation date</label>
+            <input class="form-control" id="creation_date" onfocusout="updateField('creation_date')"
+                placeholder="2021-01-31" value='{{ids.creation_date}}'>
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1">Purpose</label>
+            <input class="form-control" id="purpose" onfocusout="updateField('purpose')" placeholder="BIM Requirements"
+                value='{{ids.purpose}}'>
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1">Milestone</label>
+            <input class="form-control" id="milestone" onfocusout="updateField('milestone')" placeholder="As-built"
+                value='{{ids.milestone}}'>
+        </div>
+    </div>
 </form>
 </br>
 
 <!-- TODO form should be one for all, currently small forms for each specifications. -->
 
-{% if ids|length < 1 %} <h4>There are no specifications. Create one below!</h4>
+{% if ids.specifications|length < 1 %} <h4>There are no specifications. Create one below!</h4>
 
     {% else %}
 
-    {% for spec in ids %}
+    {% for spec in ids.specifications %}
 
     <div class="accordion" id="accordion{{ loop.index }}" style='padding:5px'>
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading{{ loop.index }}">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse{{ loop.index }}">
-                    <!-- aria-expanded="false" aria-controls="collapse{{ loop.index }}" -->
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}"
+                    aria-expanded="true" aria-controls="collapse{{ loop.index }}">
                     {{ loop.index }}.
                     <u><input type="text" style='width: 900px; margin-left: 10px; border: 0px;
-                                border-bottom: 1px solid lightgrey;' value="{{ spec.name }}"></u>
+                                border-bottom: 1px solid lightgrey;' id="spec_{{ spec.id }}" onfocusout="updateSpecificationName({{ spec.id }})" value="{{ spec.name }}"></u>
                     <!-- class="form-control"  -->
                     <a href="/duplicate/{{spec.id}}" data-toggle="tooltip" data-placement="bottom"
                         title="Duplicate the specification" style="padding-left: 16px; padding-right: 8px;">
@@ -56,7 +122,7 @@
                     </a>
                 </button>
             </h2>
-            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse in"
+            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse show"
                 data-bs-parent="#accordion{{ loop.index }}">
                 <!-- aria-labelledby="heading{{ loop.index }}" -->
                 <div class="accordion-body">
@@ -74,45 +140,55 @@
                                         {% for req in spec.applicability %}
                                         <div class="input-group input-group-sm ids-requirement">
                                             {% if req.type == 'entity' %}
-                                            <span class="input-group-text">of entity</span>
-                                            {% for entity in req.value %}
-                                            <input type="text" class="form-control ids-req" list="IfcEntities" placeholder="Ifc..." value="{{ entity }}"
-                                                autocomplete="on"> <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
-                                            <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
-                                            {% endfor %}
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="tooltip" data-placement="bottom"
-                                                title="Add entity">
-                                                <!-- <a href="/delete/{{spec.id}}"> -->
-                                                <a href="/add_requirement/{{ spec.id }}.applicability.entity">
-                                                    <i class="bi bi-plus ids-icon" style="color:black"></i>
-                                                </a>
-                                            </button>
+                                                
 
+                                                <span class="input-group-text">of entity</span>
+                                                
+                                                {% for entity in req.value %}
+                                                <input type="text" class="form-control ids-req" list="IfcEntities" placeholder="Ifc..." value="{{ entity }}"
+                                                        autocomplete="on" id="s.{{ spec.id }}.applicability.{{ req.id }}.{{ loop.index }}" onchange="updateEntity(event)"> 
+                                                    <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
+                                                
+                                                {% endfor %}
+                                                <button class="btn btn-outline-secondary" onclick="" type="button" data-toggle="tooltip" data-placement="bottom"
+                                                    title="Add entity">
+                                                    <a href="/add_requirement/{{ spec.id }}.applicability.entity">
+                                                        <i class="bi bi-plus ids-icon" style="color:black"></i>
+                                                    </a>
+                                                    </button>
                                             {% elif req.type == 'predefined' %}
-                                            <span class="input-group-text">of predefined
-                                                type</span>
-                                            <input type="text" class="form-control ids-req" placeholder="Abc..." value="{{ req.value }}">
-                                            <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
+                                                <span class="input-group-text">of predefined
+                                                    type</span>
+                                                <input type="text" class="form-control ids-req" placeholder="Abc..." value="{{ req.value }}"
+                                                    id="s.{{ spec.id }}.applicability.{{ req.id }}.value" onchange="updateSpecification(event)">
+                                                <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
+                                
                                             {% elif req.type == 'material' %}
-                                            <span class="input-group-text">of material</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}">
-                                            <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
+                                                <span class="input-group-text">of material</span>
+                                                <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}"
+                                                    id="s.{{ spec.id }}.applicability.{{ req.id }}.value" onchange="updateSpecification(event)">
+                                                <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             {% elif req.type == 'classification' %}
                                             <span class="input-group-text">of classification</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}"
+                                                id="s.{{ spec.id }}.applicability.{{ req.id }}.value" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             <span class="input-group-text">from system</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.system }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.system }}"
+                                                id="s.{{ spec.id }}.applicability.{{ req.id }}.system" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             {% elif req.type == 'property' %}
                                             <span class="input-group-text">of property</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.property }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.property }}"
+                                                id="s.{{ spec.id }}.applicability.{{ req.id }}.property" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             <span class="input-group-text">from set</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.pset }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.pset }}"
+                                                id="s.{{ spec.id }}.applicability.{{ req.id }}.pset" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             <span class="input-group-text">of value</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}"
+                                                id="s.{{ spec.id }}.applicability.{{ req.id }}.value" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             
                                             {% else %}
@@ -184,28 +260,35 @@
                                             {% elif req.type == 'predefined' %}
                                             <span class="input-group-text">a predefined
                                                 type</span>
-                                            <input type="text" class="form-control ids-req" placeholder="Abc..." value="{{ req.value }}">
+                                            <input type="text" class="form-control ids-req" placeholder="Abc..." value="{{ req.value }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.value" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             {% elif req.type == 'material' %}
                                             <span class="input-group-text">a material</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.value" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             {% elif req.type == 'classification' %}
                                             <span class="input-group-text">a classification</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.value" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             <span class="input-group-text">from system</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.system }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.system }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.system" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             {% elif req.type == 'property' %}
                                             <span class="input-group-text">a property</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.property }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.property }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.property" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             <span class="input-group-text">from set</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.pset }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.pset }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.pset" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             <span class="input-group-text">of value</span>
-                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}">
+                                            <input type="text" class="form-control" placeholder="Abc..." value="{{ req.value }}"
+                                                id="s.{{ spec.id }}.requirements.{{ req.id }}.value" onchange="updateSpecification(event)">
                                             <!-- aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" -->
                                             
                                             {% else %}
@@ -269,6 +352,133 @@
         </li> <!-- aria-current="page" -->
     </ul>
 </div>
+
+<br>
+<br>
+
+
+<div class="row mb-3" style="display: flex; width:-webkit-fill-available;">
+    <h2 class='col-6'>Your IDS in human-readable format:</h2>
+
+    <button class="btn btn-outline-success col-1" type="button" data-toggle="tooltip" data-placement="bottom"
+        title="Refresh">
+        <a href="/create/">
+            <i class="bi bi-arrow-clockwise" style="color:black">Refresh</i>
+        </a>
+    </button>
+
+</div>
+
+<br>
+
+{% if ids.specifications|length < 1 %} <h4>You need to create an IDS first. Go to <a href="/create">Create IDS</a> tab.
+    </h4>
+    {% else %}
+
+    {% for spec in ids.specifications %}
+
+    <b>{{ spec.id }}) {{ spec.name }}: </b>
+    <br>
+    All elements
+
+    {% for req in spec.applicability %}
+
+    {% if loop.index != 1 %}
+    and
+    {% endif %}
+
+    {% if req.type == 'entity' %}
+    of entity
+    {% for entity in req.value %}
+    {% if loop.index != 1 %}
+    or
+    {% endif %}
+    <p style='color:green; display:inline'>{{ entity }}{% if entity == '' %}_____{% endif %}</p>
+    {% endfor %}
+
+    {% elif req.type == 'predefined' %}
+    of predefined type
+    <p style='color:green; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+
+    {% elif req.type == 'property' %}
+    of property
+    <p style='color:green; display:inline'>{{req.property}}{% if req.value == '' %}_____{% endif %}</p>
+    in the property set
+    <p style='color:green; display:inline'>{{ req.pset }}{% if req.pset == '' %}_____{% endif %}</p>
+    with value
+    <p style='color:green; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+
+    {% elif req.type == 'classification' %}
+    of classification
+    <p style='color:green; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+    from system
+    <p style='color:green; display:inline'>{{ req.system }}{% if req.system == '' %}_____{% endif %}</p>
+
+    {% elif req.type == 'material' %}
+    of material
+    <p style='color:green; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+
+    {% else %}
+    [error!]
+
+    {% endif %}
+
+    {% endfor %}
+
+    should have
+
+    {% for req in spec.requirements %}
+
+    {% if loop.index != 1 %}
+    and
+    {% endif %}
+
+    {% if req.type == 'predefined' %}
+    a predefined type
+    <p style='color:chocolate; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+
+    {% elif req.type == 'property' %}
+    a property
+    <p style='color:chocolate; display:inline'>{{req.property}}{% if req.value == '' %}_____{% endif %}</p>
+    in the property set
+    <p style='color:chocolate; display:inline'>{{ req.pset }}{% if req.pset == '' %}_____{% endif %}</p>
+    with value
+    <p style='color:chocolate; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+
+    {% elif req.type == 'classification' %}
+    a classification
+    <p style='color:chocolate; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+    from system
+    <p style='color:chocolate; display:inline'>{{ req.system }}{% if req.system == '' %}_____{% endif %}</p>
+
+    {% elif req.type == 'material' %}
+    a material
+    <p style='color:chocolate; display:inline'>{{ req.value }}{% if req.value == '' %}_____{% endif %}</p>
+
+    {% else %}
+    [error!]
+
+    {% endif %}
+
+    {% endfor %}
+    <!-- req -->
+
+    . <br>
+    {% endfor %}
+    <!-- spec -->
+
+    {% endif %}
+
+
+
+    <br>
+
+    <datalist id="IfcSchemas">
+        <option value="Any">
+        <option value="2.3.0.1">
+        <option value="4.0.2.1">
+        <option value="4.3.0.0">
+    </datalist>
 
 <datalist id="IfcEntities">
     <option value="IfcElement">
