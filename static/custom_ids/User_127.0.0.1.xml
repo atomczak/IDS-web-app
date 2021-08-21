@@ -8,6 +8,11 @@
                     <simpleValue>IfcWall</simpleValue>
                 </name>
             </entity>
+            <material location="any">
+                <value>
+                    <simpleValue />
+                </value>
+            </material>
         </applicability>
         <requirements>
             <material location="any">
