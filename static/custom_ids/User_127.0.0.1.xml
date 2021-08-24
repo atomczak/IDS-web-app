@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- IDS (INFORMATION DELIVERY SPECIFICATION) CREATED USING IFCOPENSHELL -->
 <ids xmlns="http://standards.buildingsmart.org/IDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS/ids_04.xsd">
-    <specification name="Fire requirement specification" necessity="required">
+    <specification name="Fire requirement specification (IfcWall)" necessity="required">
         <applicability>
             <entity>
                 <name>
                     <simpleValue>IfcWall</simpleValue>
                 </name>
+                <predefinedtype>
+                    <simpleValue>CLADDINGwsd</simpleValue>
+                </predefinedtype>
             </entity>
-            <material location="any">
+            <classification location="any">
                 <value>
                     <simpleValue />
+                </value>
+                <system>
+                    <simpleValue />
+                </system>
+            </classification>
+            <material location="any">
+                <value>
+                    <simpleValue>f</simpleValue>
                 </value>
             </material>
         </applicability>
         <requirements>
             <material location="any">
                 <value>
-                    <simpleValue>TIMBERs</simpleValue>
+                    <simpleValue>TIMBER</simpleValue>
                 </value>
             </material>
             <property location="any">
@@ -33,23 +44,120 @@
             </property>
         </requirements>
     </specification>
-    <specification name="New specification" necessity="required">
+    <specification name="Fire requirement specification (IfcRoof)" necessity="required">
         <applicability>
             <entity>
                 <name>
-                    <simpleValue>IfcElement</simpleValue>
+                    <simpleValue>IfcRoof</simpleValue>
                 </name>
+                <predefinedtype>
+                    <simpleValue>CLADDINGwsd</simpleValue>
+                </predefinedtype>
             </entity>
+            <classification location="any">
+                <value>
+                    <simpleValue />
+                </value>
+                <system>
+                    <simpleValue />
+                </system>
+            </classification>
+            <material location="any">
+                <value>
+                    <simpleValue>f</simpleValue>
+                </value>
+            </material>
         </applicability>
         <requirements>
             <material location="any">
                 <value>
-                    <simpleValue>sad</simpleValue>
+                    <simpleValue>TIMBER</simpleValue>
+                </value>
+            </material>
+            <property location="any">
+                <propertyset>
+                    <simpleValue>Structural</simpleValue>
+                </propertyset>
+                <name>
+                    <simpleValue>Strength class</simpleValue>
+                </name>
+                <value>
+                    <simpleValue>C30</simpleValue>
+                </value>
+            </property>
+        </requirements>
+    </specification>
+    <specification name="Test specification (IfcSlab)" necessity="required">
+        <applicability>
+            <entity>
+                <name>
+                    <simpleValue>IfcSlab</simpleValue>
+                </name>
+                <predefinedtype>
+                    <simpleValue>TEST</simpleValue>
+                </predefinedtype>
+            </entity>
+            <classification location="any">
+                <value>
+                    <simpleValue>TEST</simpleValue>
+                </value>
+                <system>
+                    <simpleValue>TEST</simpleValue>
+                </system>
+            </classification>
+            <property location="any">
+                <propertyset>
+                    <simpleValue>TEST</simpleValue>
+                </propertyset>
+                <name>
+                    <simpleValue>TEST</simpleValue>
+                </name>
+                <value>
+                    <simpleValue>TEST</simpleValue>
+                </value>
+            </property>
+            <material location="any">
+                <value>
+                    <simpleValue>TEST</simpleValue>
+                </value>
+            </material>
+        </applicability>
+        <requirements>
+            <entity>
+                <name>
+                    <simpleValue>IfcSlab</simpleValue>
+                </name>
+                <predefinedtype>
+                    <simpleValue>TEST</simpleValue>
+                </predefinedtype>
+            </entity>
+            <classification location="any">
+                <value>
+                    <simpleValue>TEST</simpleValue>
+                </value>
+                <system>
+                    <simpleValue>TEST</simpleValue>
+                </system>
+            </classification>
+            <property location="any">
+                <propertyset>
+                    <simpleValue>TEST</simpleValue>
+                </propertyset>
+                <name>
+                    <simpleValue>TEST</simpleValue>
+                </name>
+                <value>
+                    <simpleValue>TEST</simpleValue>
+                </value>
+            </property>
+            <material location="any">
+                <value>
+                    <simpleValue>TEST</simpleValue>
                 </value>
             </material>
         </requirements>
     </specification>
     <info>
-        <date>2021-08-20</date>
+        <date>2021-08-24</date>
     </info>
 </ids>

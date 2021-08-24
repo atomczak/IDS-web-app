@@ -1,4 +1,4 @@
-var URL = "http://127.0.0.1:5000/api/"
+var URL = "/api/" //http://127.0.0.1:5000/
 var alertMessage = null;
 
 function updateField(fieldName) {
