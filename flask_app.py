@@ -192,7 +192,7 @@ def documentation_page():
 
 @app.route("/api/<fieldName>&<fieldValue>/")
 def updateField(fieldName, fieldValue):
-    logger.info(
+    print(
         "[user:"
         + request.remote_addr
         + "] parameter '"
@@ -213,7 +213,7 @@ def updateField(fieldName, fieldValue):
 
 @app.route("/api/specificationName&<specId>&<fieldValue>/")
 def updateSpecificationName(specId, fieldValue):
-    logger.info(
+    print(
         "[user:"
         + request.remote_addr
         + "] specification '"
@@ -534,9 +534,9 @@ DEFAULT_IDS = {
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger("IDS_web_logger")
-    # log_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "Log.txt")
-    logging.basicConfig(
-        level=logging.INFO, format="[%(name)s][%(levelname)s]%(message)s"
-    )
+    # logger = logging.getLogger("IDS_web_logger")
+    # # log_filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "Log.txt")
+    # logging.basicConfig(
+    #     level=logging.INFO, format="[%(name)s][%(levelname)s]%(message)s"
+    # )
     app.run()
