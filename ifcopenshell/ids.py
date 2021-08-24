@@ -38,9 +38,12 @@ from xmlschema import etree_tostring
 from lxml import etree as ElementTree
 from xmlschema.validators import facets
 from xmlschema.validators import identities
-# from xmlschema.validators.exceptions import XMLSchemaChildrenValidationError
 
-ids_schema = XMLSchema("ifcopenshell/ids.xsd")  # source: "http://standards.buildingsmart.org/IDS/ids_04.xsd"
+
+cwd = os.path.dirname(os.path.realpath(__file__))
+ids_schema = XMLSchema(
+    os.path.join(cwd, "ids.xsd")
+)  # source: "http://standards.buildingsmart.org/IDS/ids_04.xsd"
 
 
 def error(msg):
@@ -96,7 +99,9 @@ class ids:
             self.info["version"] = version
         if creation_date:
             if re.match(r"\d\d\d\d-\d\d-\d\d", creation_date):
-                self.info["date"] = creation_date  # date.fromisoformat(creation_date).isoformat()
+                self.info[
+                    "date"
+                ] = creation_date  # date.fromisoformat(creation_date).isoformat()
         if "date" not in self.info:
             self.info["date"] = date.today().isoformat()
         if purpose:
@@ -162,7 +167,9 @@ class ids:
 
         with open(filepath, "w") as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
-            f.write("<!-- IDS (INFORMATION DELIVERY SPECIFICATION) CREATED USING IFCOPENSHELL -->\n")
+            f.write(
+                "<!-- IDS (INFORMATION DELIVERY SPECIFICATION) CREATED USING IFCOPENSHELL -->\n"
+            )
             f.write(ids_str)
             f.close()
 
@@ -183,10 +190,14 @@ class ids:
 
         ids_schema.validate(filepath)
         ids_content = ids_schema.decode(
-            filepath, strip_namespaces=True, namespaces={"": "http://standards.buildingsmart.org/IDS"}
+            filepath,
+            strip_namespaces=True,
+            namespaces={"": "http://standards.buildingsmart.org/IDS"},
         )
         ids_file = ids()
-        ids_file.specifications = [specification.parse(s) for s in ids_content["specification"]]
+        ids_file.specifications = [
+            specification.parse(s) for s in ids_content["specification"]
+        ]
         return ids_file
 
     def validate(self, ifc_file, logger=None):
@@ -206,13 +217,22 @@ class ids:
             if self.info["ifcversion"] in ["2.3.0.1", "4.0.2.1", "4.3.0.0"]:
                 if self.info["ifcversion"][0:3] == "2.3":
                     if not ifc_file.schema.startswith("IFC2x3"):
-                        logger.error("IFC file is of %s not of %s schema." % (ifc_file.schema, self.info["ifcversion"]))
+                        logger.error(
+                            "IFC file is of %s not of %s schema."
+                            % (ifc_file.schema, self.info["ifcversion"])
+                        )
                 elif self.info["ifcversion"][0:3] == "4.0":
                     if not ifc_file.schema == "IFC4":
-                        logger.error("IFC file is of %s not of %s schema." % (ifc_file.schema, self.info["ifcversion"]))
+                        logger.error(
+                            "IFC file is of %s not of %s schema."
+                            % (ifc_file.schema, self.info["ifcversion"])
+                        )
                 elif self.info["ifcversion"][0:3] == "4.3":
                     if not ifc_file.schema.startswith("IFC4x3"):
-                        logger.error("IFC file is of %s not of %s schema." % (ifc_file.schema, self.info["ifcversion"]))
+                        logger.error(
+                            "IFC file is of %s not of %s schema."
+                            % (ifc_file.schema, self.info["ifcversion"])
+                        )
                 else:
                     logger.error("IFC version not recognized")
 
@@ -228,7 +248,9 @@ class ids:
                     self.ifc_passed += 1
             if self.ifc_applicable == 0:
                 if spec.necessity == "required":
-                    logger.error("No applicable elements found. Minimum 1 applicable element required.")
+                    logger.error(
+                        "No applicable elements found. Minimum 1 applicable element required."
+                    )
                 else:
                     logger.debug("No applicable elements found. None required.")
 
@@ -293,7 +315,9 @@ class specification:
 
         def parse_rules(dict):
             facet_names = list(dict.keys())
-            facet_properties = [v[0] if isinstance(v, list) else v for v in list(dict.values())]
+            facet_properties = [
+                v[0] if isinstance(v, list) else v for v in list(dict.values())
+            ]
             classes = [meta_facet.facets.__getitem__(f) for f in facet_names]
             facets = [cls(n) for cls, n in zip(classes, facet_properties)]
             return facets
@@ -312,6 +336,7 @@ class specification:
         :type facet: facet
 
         Example::
+
             i = ids.ids()
             i.specifications.append(ids.specification(name="Test_Specification"))
             e = ids.entity.create(name="Test_Name", predefinedtype="Test_PredefinedType")
@@ -395,7 +420,10 @@ class specification:
         :return: sentence
         :rtype: str
         """
-        return "Given an instance with %(applicability)s\nWe expect %(requirements)s" % self.__dict__
+        return (
+            "Given an instance with %(applicability)s\nWe expect %(requirements)s"
+            % self.__dict__
+        )
 
 
 class facet_evaluation:
@@ -519,14 +547,19 @@ class entity(facet):
 
         # @nb with inheritance
         if self.predefinedtype and hasattr(inst, "PredefinedType"):
-            self.message = "an entity name '%(name)s' of predefined type '%(predefinedtype)s'"
+            self.message = (
+                "an entity name '%(name)s' of predefined type '%(predefinedtype)s'"
+            )
             return facet_evaluation(
                 inst.is_a(self.name) and inst.PredefinedType == self.predefinedtype,
-                self.message % {"name": inst.is_a(), "predefinedtype": inst.PredefinedType},
+                self.message
+                % {"name": inst.is_a(), "predefinedtype": inst.PredefinedType},
             )
         else:
             self.message = "an entity name '%(name)s'"
-            return facet_evaluation(inst.is_a(self.name), self.message % {"name": inst.is_a()})
+            return facet_evaluation(
+                inst.is_a(self.name), self.message % {"name": inst.is_a()}
+            )
 
 
 class classification(facet):
@@ -584,7 +617,9 @@ class classification(facet):
 
         instance_classiciations = inst.HasAssociations
         if ifcopenshell.util.element.get_type(inst):
-            type_classifications = ifcopenshell.util.element.get_type(inst).HasAssociations
+            type_classifications = ifcopenshell.util.element.get_type(
+                inst
+            ).HasAssociations
         else:
             type_classifications = ()
 
@@ -592,7 +627,9 @@ class classification(facet):
             associations = instance_classiciations
         elif self.location == "type" and type_classifications:
             associations = type_classifications
-        elif self.location == "any" and (instance_classiciations or type_classifications):
+        elif self.location == "any" and (
+            instance_classiciations or type_classifications
+        ):
             associations = instance_classiciations + type_classifications
         else:
             associations = ()
@@ -619,7 +656,9 @@ class classification(facet):
                 },  # what if not first item of refs?
             )
         else:
-            return facet_evaluation(False, "does not have %sclassification reference" % self.location_msg)
+            return facet_evaluation(
+                False, "does not have %sclassification reference" % self.location_msg
+            )
 
 
 class property(facet):
@@ -628,7 +667,9 @@ class property(facet):
     """
 
     parameters = ["name", "propertyset", "value", "location"]
-    message = "%(location)sproperty '%(name)s' in '%(propertyset)s' with a value %(value)s"
+    message = (
+        "%(location)sproperty '%(name)s' in '%(propertyset)s' with a value %(value)s"
+    )
 
     @staticmethod
     def create(location="any", propertyset=None, name=None, value=None):
@@ -688,7 +729,9 @@ class property(facet):
         instance_props = ifcopenshell.util.element.get_psets(inst)
 
         if ifcopenshell.util.element.get_type(inst):
-            type_props = ifcopenshell.util.element.get_psets(ifcopenshell.util.element.get_type(inst))
+            type_props = ifcopenshell.util.element.get_psets(
+                ifcopenshell.util.element.get_type(inst)
+            )
         else:
             type_props = {}
 
@@ -705,13 +748,21 @@ class property(facet):
         val = pset.get(self.name) if pset else None
 
         self.location_msg = location[self.location]
-        di = {"name": self.name, "propertyset": self.propertyset, "value": "'%s'" % val, "location": self.location_msg}
+        di = {
+            "name": self.name,
+            "propertyset": self.propertyset,
+            "value": "'%s'" % val,
+            "location": self.location_msg,
+        }
 
         if val is not None:
             msg = self.message % di
         else:
             if pset:
-                msg = "does not have %(location)sproperty '%(name)s' in a set '%(propertyset)s'" % di
+                msg = (
+                    "does not have %(location)sproperty '%(name)s' in a set '%(propertyset)s'"
+                    % di
+                )
             else:
                 msg = "does not have %(location)sset '%(propertyset)s'" % di
 
@@ -782,7 +833,9 @@ class material(facet):
 
         self.location = self.node["@location"]
 
-        instance_material_rel = [rel for rel in inst.HasAssociations if rel.is_a("IfcRelAssociatesMaterial")]
+        instance_material_rel = [
+            rel for rel in inst.HasAssociations if rel.is_a("IfcRelAssociatesMaterial")
+        ]
         if ifcopenshell.util.element.get_type(inst):
             type_material_rel = [
                 rel
@@ -805,17 +858,28 @@ class material(facet):
         for rel in material_relations:
             if rel.RelatingMaterial.is_a() == "IfcMaterial":
                 materials.append(rel.RelatingMaterial.Name)
-            elif rel.RelatingMaterial.is_a() == "IfcMaterialMaterialList":  # DEPRECATED in IFC4
+            elif (
+                rel.RelatingMaterial.is_a() == "IfcMaterialMaterialList"
+            ):  # DEPRECATED in IFC4
                 [materials.append(mat.Name) for mat in rel.RelatingMaterial]
             elif rel.RelatingMaterial.is_a() == "IfcMaterialConstituentSet":
-                [materials.append(mat.Material.Name) for mat in rel.RelatingMaterial.MaterialConstituents]
+                [
+                    materials.append(mat.Material.Name)
+                    for mat in rel.RelatingMaterial.MaterialConstituents
+                ]
             elif rel.RelatingMaterial.is_a() == "IfcMaterialLayerSet":
-                [materials.append(mat.Name) for mat in rel.RelatingMaterial.MaterialLayers]
+                [
+                    materials.append(mat.Name)
+                    for mat in rel.RelatingMaterial.MaterialLayers
+                ]
             elif rel.RelatingMaterial.is_a() == "IfcMaterialLayerSetUsage":
                 layers = rel.RelatingMaterial.ForLayerSet.MaterialLayers
                 [materials.append(layer.Material.Name) for layer in layers]
             elif rel.RelatingMaterial.is_a() == "IfcMaterialProfileSet":
-                [materials.append(mat.Material.Name) for mat in rel.RelatingMaterial.MaterialProfiles]
+                [
+                    materials.append(mat.Material.Name)
+                    for mat in rel.RelatingMaterial.MaterialProfiles
+                ]
             elif rel.RelatingMaterial.is_a() == "IfcMaterialProfileSetUsage":
                 profileSets = rel.RelatingMaterial.ForProfileSet.MaterialProfiles
                 [materials.append(pset.Material.Name) for pset in profileSets]
@@ -829,7 +893,8 @@ class material(facet):
 
         return facet_evaluation(
             self.value in materials,
-            self.message % {"value": "'/'".join(materials), "location": self.location_msg},
+            self.message
+            % {"value": "'/'".join(materials), "location": self.location_msg},
         )
 
 
@@ -943,7 +1008,9 @@ class restriction:
                 if "xs:option" not in rest_dict:
                     rest_dict["xs:" + option] = [{"@value": option}]
                 else:
-                    rest_dict["xs:" + option].append({"@value": self.options[option], "@fixed": False})
+                    rest_dict["xs:" + option].append(
+                        {"@value": self.options[option], "@fixed": False}
+                    )
         elif self.type == "pattern":
             if "xs:pattern" not in rest_dict:
                 rest_dict["xs:pattern"] = [{"@value": self.options}]
@@ -953,7 +1020,7 @@ class restriction:
 
     @staticmethod
     def create(options, type="pattern", base="string"):
-        """[summary]
+        """Create restriction instead of simpleValue
 
         :param type: One of "enumeration"|"pattern"|"bounds", defaults to "pattern"
         :type type: str, optional
@@ -1037,7 +1104,9 @@ class restriction:
         if self.type == "enumeration":
             msg = msg + "of value: '%s'" % "' or '".join(self.options)
         elif self.type == "bounds":
-            msg = msg + "of value %s" % ", and ".join([bounds[x] + str(self.options[x]) for x in self.options])
+            msg = msg + "of value %s" % ", and ".join(
+                [bounds[x] + str(self.options[x]) for x in self.options]
+            )
         elif self.type == "length":
             msg = msg + "with %s letters" % " and ".join(self.options)
         elif self.type == "pattern":
@@ -1093,31 +1162,37 @@ class SimpleHandler(logging.StreamHandler):
 
 
 class BcfHandler(logging.StreamHandler):
-    """Logging handler for creation of BCF report files."""
+    """Logging handler for creation of BCF report files.
 
-    def __init__(self, project_name="IDS Project", author="your@email.com", filepath=None, report_valid=False):
-        """Logging handler for creation of BCF report files.
+    :param project_name: defaults to "IDS Project"
+    :type project_name: str, optional
+    :param author: Email of the person creating the BCF report, defaults to "your@email.com"
+    :type author: str, optional
+    :param filepath: Path to save the BCF report, defaults to None
+    :type filepath: str, optional
+    :param report_valid: True if you want to list all the compliant cases as well, defaults to False
+    :type report_valid: bool, optional
 
-        :param project_name:, defaults to "IDS Project"
-        :type project_name: str, optional
-        :param author: Email of the person creating the BCF report, defaults to "your@email.com"
-        :type author: str, optional
-        :param filepath: Path to save the BCF report, defaults to None
-        :type filepath: str, optional
-        :param report_valid: True if you want to list all the compliant cases as well, defaults to False
-        :type report_valid: bool, optional
+    Example::
 
-        Example::
-            bcf_handler = BcfHandler(
-                project_name="Default IDS Project",
-                author="your@email.com",
-                filepath=r".\test.bcfzip",
-            )
-            logger = logging.getLogger("IDS_Logger")
-            logging.basicConfig(filename=".\", level=logging.INFO, format="%(message)s")
-            logging.FileHandler(filename, mode="w")
-            logger.addHandler(bcf_handler)
-        """
+        bcf_handler = BcfHandler(
+            project_name="Default IDS Project",
+            author="your@email.com",
+            filepath=r".\example.bcfzip",
+        )
+        logger = logging.getLogger("IDS_Logger")
+        logging.basicConfig(level=logging.INFO, format="%(message)s")
+        logger.addHandler(bcf_handler)
+    """
+
+    def __init__(
+        self,
+        project_name="IDS Project",
+        author="your@email.com",
+        filepath=None,
+        report_valid=False,
+    ):
+
         logging.StreamHandler.__init__(self)
         if report_valid:
             self.setLevel(logging.INFO)
@@ -1145,7 +1220,9 @@ class BcfHandler(logging.StreamHandler):
         viewpoint.perspective_camera = bcf.PerspectiveCamera()
         ifc_elem = log_content.msg["ifc_element"]
         # ifc_elem = ifc_file.by_guid(log_content.msg["guid"])
-        target_position = np.array(ifcopenshell.util.placement.get_local_placement(ifc_elem.ObjectPlacement))
+        target_position = np.array(
+            ifcopenshell.util.placement.get_local_placement(ifc_elem.ObjectPlacement)
+        )
         target_position = target_position[:, 3][0:3]
         camera_position = target_position + np.array((5, 5, 5))
         viewpoint.perspective_camera.camera_view_point.x = camera_position[0]
@@ -1218,7 +1295,7 @@ if __name__ == "__main__":
 
     logger = logging.getLogger("IDS_Logger")
     logging.basicConfig(filename=filepath, level=logging.INFO, format="%(message)s")
-    logging.FileHandler(filepath+r"\report.txt", mode="w")
+    logging.FileHandler(filepath + r"\report.txt", mode="w")
 
     bcf_handler = BcfHandler(
         project_name="Default IDS Project",
